@@ -19,12 +19,6 @@
 
 ![Sway](https://codeberg.org/bibjaw99/grimmstation-misc/raw/branch/main/screenshots/sway.png)
 
-### waybar themes
-
-- to launch the rofi theme selector, press `mod+shift+s` then `b`
-
-![wabar themes](https://codeberg.org/bibjaw99/grimmstation-misc/raw/branch/main/screenshots/waybarSwitching.gif)
-
 ---
 
 ## At a glance
