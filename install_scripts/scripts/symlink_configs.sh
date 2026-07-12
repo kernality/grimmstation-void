@@ -6,10 +6,11 @@ db="$DIR/../db/config_dotfiles.db.json"
 backup="$HOME/.config.backup/$(date +%Y%m%d_%H-%M-%S)"
 mkdir -p "$backup"
 expand_home() {
-  case "$1" in
-    '\$HOME'/*) printf '%s/%s\n' "$HOME" "${1#\$HOME/}" ;;
-    *) printf '%s\n' "$1" ;;
-  esac
+  local value=$1
+  if [[ "$value" == '$HOME' ]]; then printf '%s\n' "$HOME"
+  elif [[ "$value" == '$HOME/'* ]]; then printf '%s/%s\n' "$HOME" "${value#\$HOME/}"
+  else printf '%s\n' "$value"
+  fi
 }
 while IFS= read -r row; do
   name="$(jq -r '.name' <<<"$row")"
@@ -18,12 +19,9 @@ while IFS= read -r row; do
   [[ -e "$src" || -L "$src" ]] || error "Missing source for $name: $src"
   mkdir -p "$(dirname "$dst")"
   if [[ -e "$dst" && ! -L "$dst" ]]; then
-    target="$backup/$name"
-    [[ ! -e "$target" ]] || target="$backup/${name}-$(date +%s%N)"
+    target="$backup/$name"; [[ ! -e "$target" ]] || target="$backup/${name}-$(date +%s%N)"
     mv -- "$dst" "$target"
-  elif [[ -L "$dst" ]]; then
-    rm -- "$dst"
-  fi
+  elif [[ -L "$dst" ]]; then rm -- "$dst"; fi
   ln -sfn -- "$src" "$dst"
   success "Linked $name"
 done < <(jq -c '.[]' "$db")

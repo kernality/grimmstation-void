@@ -1,0 +1,17 @@
+add_newline = false
+command_timeout = 1200
+format = "$directory$git_branch$git_status$character"
+[directory]
+style = "bold yellow"
+truncation_length = 4
+truncate_to_repo = false
+[git_branch]
+format = "[$symbol$branch]($style) "
+style = "bold purple"
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "bold red"
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold yellow)"

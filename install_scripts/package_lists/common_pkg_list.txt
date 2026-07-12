@@ -48,3 +48,6 @@ noto-fonts-ttf
 noto-fonts-emoji
 nerd-fonts-ttf
 dejavu-fonts-ttf
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting

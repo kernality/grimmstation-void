@@ -1,28 +1,16 @@
 #!/usr/bin/env bash
-SETUP_POWER_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SETUP_POWER_PATH/mini_functions.sh"
-
-info "Installing TLP ..."
+set -Eeuo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; source "$DIR/mini_functions.sh"
 sudo xbps-install -y tlp
-
-# GUARD: acpid + elogind both handling ACPI = double-suspend. We use elogind.
-if xbps-query acpid &>/dev/null; then
- warning "acpid conflicts with elogind's power handling."
- [[ -e /var/service/acpid ]] && { warning "Disabling acpid service ..."; sudo rm -f /var/service/acpid; }
- [[ -e /etc/acpi/events/anything ]] && sudo mv /etc/acpi/events/anything /etc/acpi/events/anything.disabled
-fi
-
-info "Writing /etc/elogind/logind.conf.d/10-grimoire.conf ..."
+[[ -e /var/service/acpid || -L /var/service/acpid ]] && sudo rm -f /var/service/acpid
 sudo mkdir -p /etc/elogind/logind.conf.d
-sudo tee /etc/elogind/logind.conf.d/10-grimoire.conf >/dev/null <<'EOF'
+sudo tee /etc/elogind/logind.conf.d/10-grimoire.conf >/dev/null <<'CONF'
 [Login]
 HandleLidSwitch=suspend
 HandleLidSwitchExternalPower=suspend
 HandlePowerKey=suspend
 HandleSuspendKey=suspend
 IdleAction=ignore
-EOF
-
-info "Ensuring non-root backlight access (video group) ..."
-
-success "Power configured (TLP + elogind lid/key rules + brightness)."
+CONF
+getent group video >/dev/null && sudo usermod -aG video "$USER"
+success 'TLP and elogind power handling configured'
