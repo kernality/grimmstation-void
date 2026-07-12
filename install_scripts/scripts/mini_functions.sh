@@ -1,47 +1,11 @@
 #!/usr/bin/env bash
-
-# ===================================================================================
-# get the base name of a path
-get_basename() {
-  local dir="${1%/}"
-  basename "$dir" .git
-}
-
-# get the directory path
-get_dirname() {
-  local dir="${1%/}"
-  dirname "$dir"
-}
-
-# ===================================================================================
-# messages
-info () {
-  printf "\e[1;34m[INFO]\e[0m %s\n" "$*"
-}
-
-success () {
-  printf "\e[1;32m[SUCCESS]\e[0m %s\n" "$*"
-}
-
-warning () {
-  printf "\e[1;33m[WARNING]\e[0m %s\n" "$*"
-}
-
-error () {
-  printf "\e[1;31m[ERROR]\e[0m %s\n" "$*" >&2
-  exit 1
-}
-
-# ===================================================================================
-# script separator
-separation() {
-  printf "\n"
-  printf "%s\n" "======================================================================"
-  printf "\n"
-}
-
-# caller funtion
-run_function() {
-  "$@" || return 1
-  separation
+info()    { printf '\033[1;34m[INFO]\033[0m %s\n' "$*"; }
+success() { printf '\033[1;32m[OK]\033[0m %s\n' "$*"; }
+warning() { printf '\033[1;33m[WARN]\033[0m %s\n' "$*"; }
+die()     { printf '\033[1;31m[ERROR]\033[0m %s\n' "$*" >&2; exit 1; }
+require_command() { command -v "$1" >/dev/null || die "Missing command: $1"; }
+enable_service() {
+  local name="$1"
+  [[ -d "/etc/sv/$name" ]] || die "Required service unavailable: $name"
+  sudo ln -sfn "/etc/sv/$name" "/var/service/$name"
 }
