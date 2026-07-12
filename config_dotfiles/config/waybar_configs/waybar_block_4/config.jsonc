@@ -25,8 +25,8 @@
     "clock"
   ],
   "custom/launcher": {
-    "format": "<span color='#83a598'></span>",
-    "on-click": "pkill wofi || wofi --show drun --allow-images --insensitive",
+    "format": "<span></span>",
+    "on-click": "pkill -x wofi || wofi --show drun --allow-images --insensitive",
     "on-click-right": "~/.config/custom_scripts/power.sh",
     "escape": true,
     "tooltip": false
