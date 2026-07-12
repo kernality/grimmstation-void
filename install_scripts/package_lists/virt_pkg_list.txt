@@ -1,6 +1,0 @@
-libvirt
-qemu
-virt-manager
-virt-viewer
-dnsmasq
-openbsd-netcat
