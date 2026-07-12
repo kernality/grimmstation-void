@@ -2,9 +2,26 @@
   "layer": "top",
   "height": 27,
   "spacing": 4,
-  "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode"],
-  "modules-center": ["sway/window"],
-  "modules-right": ["network", "disk", "cpu", "custom/cpu_temp", "memory", "backlight", "wireplumber", "battery", "tray", "clock"],
+  "modules-left": [
+    "custom/launcher",
+    "sway/workspaces",
+    "sway/mode"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "network",
+    "disk",
+    "cpu",
+    "custom/cpu_temp",
+    "memory",
+    "backlight",
+    "wireplumber",
+    "battery",
+    "tray",
+    "clock"
+  ],
   "custom/launcher": {
     "format": " 󰣇 ",
     "on-click": "pkill -x wofi || wofi --show drun",
@@ -21,7 +38,9 @@
     "max-length": 68,
     "tooltip": false
   },
-  "sway/mode": { "format": "[{}]" },
+  "sway/mode": {
+    "format": "[{}]"
+  },
   "network": {
     "interval": 5,
     "format-wifi": "󰤨 {essid}",
@@ -35,15 +54,26 @@
     "format": "󰋊 {percentage_used}%",
     "tooltip-format": "{used} used of {total}"
   },
-  "cpu": { "interval": 3, "format": " {usage}%", "tooltip": false },
+  "cpu": {
+    "interval": 3,
+    "format": " {usage}%",
+    "tooltip": false
+  },
   "custom/cpu_temp": {
     "exec": "~/.config/waybar/scripts/cpu_temp.sh",
     "return-type": "json",
     "interval": 5,
     "tooltip": false
   },
-  "memory": { "interval": 5, "format": " {percentage}%", "tooltip": false },
-  "backlight": { "format": "󰃠 {percent}%", "tooltip": false },
+  "memory": {
+    "interval": 5,
+    "format": " {percentage}%",
+    "tooltip": false
+  },
+  "backlight": {
+    "format": "󰃠 {percent}%",
+    "tooltip": false
+  },
   "wireplumber": {
     "format": " {volume}%",
     "format-muted": " muted",
@@ -55,12 +85,28 @@
   },
   "battery": {
     "interval": 30,
-    "states": { "warning": 20, "critical": 10 },
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
     "format": "{icon} {capacity}%",
     "format-charging": "󰂄 {capacity}%",
-    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "format-icons": [
+      "󰁺",
+      "󰁼",
+      "󰁾",
+      "󰂀",
+      "󰁹"
+    ],
     "tooltip": false
   },
-  "tray": { "icon-size": 15, "spacing": 8 },
-  "clock": { "format": "{:%a %d | %H:%M}", "tooltip": false }
+  "tray": {
+    "icon-size": 15,
+    "spacing": 8
+  },
+  "clock": {
+    "format": "{:%a %d | %H:%M}",
+    "tooltip": false
+  },
+  "reload_style_on_change": true
 }

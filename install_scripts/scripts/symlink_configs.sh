@@ -26,3 +26,29 @@ while IFS= read -r row; do
   success "Linked $name"
 done < <(jq -c '.[]' "$db")
 rmdir "$backup" 2>/dev/null || true
+
+# Install repository-owned desktop entries without replacing the user's
+# ~/.local/share/applications directory.
+desktop_src="$HOME/.local/share/config_dotfiles/local/share/applications"
+desktop_dst="$HOME/.local/share/applications"
+
+if [[ -L "$desktop_dst" ]]; then
+ expected="$(readlink -f "$desktop_src" 2>/dev/null || true)"
+ actual="$(readlink -f "$desktop_dst" 2>/dev/null || true)"
+
+ if [[ -n "$expected" && "$actual" == "$expected" ]]; then
+  # Migrate installations made by the older whole-directory symlink.
+  rm -- "$desktop_dst"
+ else
+  mv -- "$desktop_dst" "$backup/desktop-applications-link"
+ fi
+fi
+
+mkdir -p -- "$desktop_dst"
+
+while IFS= read -r -d '' desktop_file; do
+ install -m 0644 -- "$desktop_file" \
+  "$desktop_dst/$(basename "$desktop_file")"
+done < <(find "$desktop_src" -maxdepth 1 -type f -name '*.desktop' -print0)
+
+success "Installed desktop application entries"

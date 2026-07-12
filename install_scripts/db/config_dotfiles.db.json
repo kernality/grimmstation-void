@@ -93,10 +93,5 @@
     "name": "mimeapps",
     "config_src": "$HOME/.local/share/config_dotfiles/config/mimeapps.list",
     "config_des": "$HOME/.config/mimeapps.list"
-  },
-  {
-    "name": "desktop applications",
-    "config_src": "$HOME/.local/share/config_dotfiles/local/share/applications",
-    "config_des": "$HOME/.local/share/applications"
   }
 ]

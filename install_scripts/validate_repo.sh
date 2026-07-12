@@ -27,7 +27,7 @@ fi
 jq empty install_scripts/db/config_dotfiles.db.json ||
   report_failure "Invalid symlink database JSON"
 
-grep -Rnw install_scripts --include='*.sh' -e 'error ' &&
+grep -Rnw install_scripts --include='*.sh' --exclude='validate_repo.sh' -e 'error ' &&
   report_failure "Stale error() calls remain"
 
 grep -Rnw install_scripts --include='*.sh' -e 'run_function' |
