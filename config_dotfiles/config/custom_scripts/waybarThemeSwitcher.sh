@@ -7,49 +7,46 @@ switch_waybar_themes() {
   local selected_waybar_theme
   local selected_path
 
-  # store theme directories in an array
+  # Store theme directories
   mapfile -t waybar_themes < <(
     find "$waybar_themes_directory" -mindepth 1 -maxdepth 1 -type d -printf "%f\n"
   )
 
-  # rofi theme selection prompt
+  # Wofi theme selection prompt
   selected_waybar_theme="$(
     printf "%s\n" "${waybar_themes[@]}" |
     sort |
-    rofi -dmenu -i -p "Themes"
+    wofi --dmenu -i --prompt "Themes" --width 400
   )"
 
-  # notify if a theme is not selected
-  if [[ -z "$selected_waybar_theme" ]];then
-    return 0
-  fi
-  
-  # full selected path
+  # Exit if nothing selected
+  [[ -n "$selected_waybar_theme" ]] || return 0
+
+  # Selected theme path
   selected_path="$waybar_themes_directory/$selected_waybar_theme"
 
-  # handle wrong theme name
-  [[ -d "$selected_path" ]] || {
+  # Ensure theme exists
+  if [[ ! -d "$selected_path" ]]; then
     notify-send "Waybar" "Config \"$selected_waybar_theme\" not found"
     return 1
-  }
-
-  # check if link is already selected
-  if [[ -L "$waybar_config_directory" ]];then
-    if [[ "$(readlink -f "$waybar_config_directory")" == "$(readlink -f "$selected_path")" ]]; then
-      notify-send "Waybar" "Already using: $selected_waybar_theme"
-      return 0
-    fi
   fi
 
-  # create symlink or replace with existing one
+  # Skip if already active
+  if [[ -L "$waybar_config_directory" ]] &&
+     [[ "$(readlink -f "$waybar_config_directory")" == "$(readlink -f "$selected_path")" ]]; then
+    notify-send "Waybar" "Already using: $selected_waybar_theme"
+    return 0
+  fi
+
+  # Update symlink
   ln -sfn "$selected_path" "$waybar_config_directory"
 
-  # restart waybar session
+  # Restart Waybar
   pkill -x waybar 2>/dev/null || true
   sleep 1
 
-  # reload depending on the window manager
-  if [[ "$XDG_CURRENT_DESKTOP" == "sway:wlroots" ]];then
+  # Reload depending on compositor
+  if pgrep -x sway >/dev/null; then
     swaymsg reload
   else
     waybar & disown
