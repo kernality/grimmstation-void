@@ -1,0 +1,21 @@
+# grimoire-void wofi — global options only (NO 'show'/'mode'; the mode always
+# comes from the command line: --show drun  or  --dmenu).
+matching=fuzzy
+insensitive=true
+prompt=Search
+term=footclient
+width=45%
+lines=12
+dynamic_lines=true
+hide_scroll=true
+allow_images=true
+image_size=26
+no_actions=true
+gtk_dark=true
+location=center
+key_expand=Tab
+key_exit=Escape
+key_down=Down,Control_L-j,Control_L-n
+key_up=Up,Control_L-k,Control_L-p
+key_pgdn=Page_Down,Control_L-d
+key_pgup=Page_Up,Control_L-u

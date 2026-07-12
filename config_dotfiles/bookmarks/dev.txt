@@ -1,0 +1,5 @@
+https://github.com
+
+https://www.geeksforgeeks.org/c/learn-dsa-in-c/
+https://www.geeksforgeeks.org/postgresql/postgresql-tutorial/
+https://www.geeksforgeeks.org/linux-unix/linux-tutorial/

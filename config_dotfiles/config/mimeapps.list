@@ -1,0 +1,31 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop;
+inode/directory=pcmanfm.desktop;
+image/png=org.xfce.ristretto.desktop;
+image/jpeg=org.xfce.ristretto.desktop;
+image/webp=org.xfce.ristretto.desktop;
+image/gif=org.xfce.ristretto.desktop;
+video/mp4=mpv.desktop;
+text/html=firefox.desktop;
+text/plain=nvim.desktop;
+text/csv=nvim.desktop;
+text/markdown=nvim.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/about=firefox.desktop;
+x-scheme-handler/unknown=firefox.desktop;
+application/x-xz-compressed-tar=xarchiver.desktop;
+application/zip=xarchiver.desktop;
+
+[Added Associations]
+application/pdf=org.pwmt.zathura.desktop;
+inode/directory=pcmanfm.desktop;
+image/png=org.xfce.ristretto.desktop;
+image/jpeg=org.xfce.ristretto.desktop;
+image/webp=org.xfce.ristretto.desktop;firefox.desktop;
+image/gif=org.xfce.ristretto.desktop;firefox.desktop;
+video/mp4=mpv.desktop;
+text/plain=nvim.desktop;
+text/markdown=nvim.desktop;
+application/x-xz-compressed-tar=xarchiver.desktop;
+application/zip=xarchiver.desktop;
